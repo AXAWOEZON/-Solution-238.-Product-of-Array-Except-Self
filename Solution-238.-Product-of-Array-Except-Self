@@ -1,0 +1,56 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Solution {
+public:
+    // Метод для вычисления массива, где каждый элемент равен произведению всех элементов nums, кроме текущего.
+    // Method to compute an array where each element is the product of all elements of nums except the current one.
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int i = nums.size();
+
+        // Инициализируем массивы left и right, а также массив ответа.
+        // Initialize arrays left, right, and the answer array.
+        vector<int> answer(i, 1);
+        vector<int> left(i, 1);
+        vector<int> right(i, 1);
+        
+        // Вычисляем произведения всех элементов nums, расположенных слева от текущего элемента.
+        // Compute the products of all elements of nums located to the left of the current element.
+        for (int n = 1; n < i; n++) {
+            left[n] = left[n - 1] * nums[n - 1];
+        }
+            
+        // Вычисляем произведения всех элементов nums, расположенных справа от текущего элемента.
+        // Compute the products of all elements of nums located to the right of the current element.
+        for (int n = i - 2; n >= 0; n--) {
+            right[n] = right[n + 1] * nums[n + 1];
+        }
+
+        // Вычисляем ответ, перемножая соответствующие элементы left и right.
+        // Compute the answer by multiplying corresponding elements of left and right.
+        for (int n = 0; n < i; n++) {
+            answer[n] = left[n] * right[n]; 
+        }
+
+        // Возвращаем массив с ответом.
+        // Return the array with the answer.
+        return answer;
+    }
+};
+int main() {
+        
+    Solution solution;
+    vector<int> nums = { 1, 2, 3, 4 };
+    vector<int> result = solution.productExceptSelf(nums);
+
+    
+    cout << "Result: ";
+    for (int num : result) {
+        cout << num << " ";
+    }
+    cout << endl;
+
+    return 0;
+}
